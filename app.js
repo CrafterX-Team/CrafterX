@@ -67,4 +67,43 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
+//! Gelen giden system (Başlangıç)
+client.on('guildMemberAdd', member => {
+    const serverData = JSON.parse(fs.readFileSync('./Data/server.json', 'utf-8'));
+    const logChannelId = serverData[member.guild.id]?.logChannel;
+    if (logChannelId) {
+        const logChannel = member.guild.channels.cache.get(logChannelId);
+        if (logChannel) {
+            const embed = new MessageEmbed()
+                .setColor('#00FF00')
+                .setTitle('Üye Katıldı')
+                .setDescription(`${member.user.tag} sunucuya katıldı.`)
+                .setThumbnail(member.user.displayAvatarURL())
+                .setTimestamp();
+
+            logChannel.send({ embeds: [embed] });
+        }
+    }
+});
+
+client.on('guildMemberRemove', member => {
+    const serverData = JSON.parse(fs.readFileSync('./Data/server.json', 'utf-8'));
+    const logChannelId = serverData[member.guild.id]?.logChannel;
+    if (logChannelId) {
+        const logChannel = member.guild.channels.cache.get(logChannelId);
+        if (logChannel) {
+            const embed = new MessageEmbed()
+                .setColor('#FF0000')
+                .setTitle('Üye Ayrıldı')
+                .setDescription(`${member.user.tag} sunucudan ayrıldı.`)
+                .setThumbnail(member.user.displayAvatarURL())
+                .setTimestamp();
+
+            logChannel.send({ embeds: [embed] });
+        }
+    }
+});
+//! Gelen giden system (Bitiş)
+
+
 client.login(config.token);
