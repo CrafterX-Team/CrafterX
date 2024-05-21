@@ -16,13 +16,25 @@ const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
-    client.commands.set(command.data.name, command);
+    
+    // Komutun doğru yapıda olup olmadığını kontrol edin
+    if ('data' in command && 'execute' in command) {
+        client.commands.set(command.data.name, command);
+    } else {
+        console.log(`[UYARI] ${filePath} dosyası doğru bir komut modülü içermiyor.`);
+    }
 }
 
 const commands = client.commands.map(cmd => cmd.data.toJSON());
 
 client.once('ready', async () => {
     console.log(`Bot ${client.user.tag} olarak giriş yaptı!`);
+
+    // Botun durumunu ayarlayın
+    client.user.setPresence({
+        activities: [{ name: 'CrafterX', type: 'PLAYING' }],
+        status: 'dnd',
+    });
 
     const rest = new REST({ version: '9' }).setToken(config.token);
 
