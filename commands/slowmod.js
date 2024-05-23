@@ -13,21 +13,21 @@ module.exports = {
     
     // Kullanıcının yönetici iznini kontrol et
     if (!interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
-      return interaction.reply({ content: '<:denied:1242201411492778034> Bu komutu kullanmak için yönetici iznine sahip olmalısınız.', ephemeral: true });
+      return interaction.reply({ content: '<:denied:1243275827974504528> Bu komutu kullanmak için yönetici iznine sahip olmalısınız.', ephemeral: true });
     }
 
     try {
       await targetChannel.setRateLimitPerUser(slowmodeDuration);
 
       const embed = new MessageEmbed()
-        .setColor('#4ce94f')
-        .setTitle('<:sucses:1242201413556113499> Yavaş Mod Açıldı')
+        .setColor('#30cb74')
+        .setTitle('<:sucses:1243275119414214756> Yavaş Mod Açıldı')
         .setDescription(`**${targetChannel.name}** kanalına ${slowmodeDuration} saniye yavaş mod eklendi.`);
 
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);
-      interaction.reply({ content: '<:denied:1242201411492778034> Yavaş mod güncellenirken bir hata oluştu.', ephemeral: true });
+      interaction.reply({ content: '<:denied:1243275827974504528> Yavaş mod güncellenirken bir hata oluştu.', ephemeral: true });
     }
   },
 };

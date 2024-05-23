@@ -16,8 +16,8 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
             const noPermissionEmbed = new MessageEmbed()
-                .setColor('#e94c4c')
-                .setTitle('<:denied:1242201411492778034> Yetki Hatası')
+                .setColor('#fd494a')
+                .setTitle('<:denied:1243275827974504528> Yetki Hatası')
                 .setDescription('Bu komutu kullanmak için yetkiniz yok.');
             return interaction.reply({ embeds: [noPermissionEmbed], ephemeral: true });
         }
@@ -28,8 +28,8 @@ module.exports = {
         const member = interaction.guild.members.cache.get(user.id);
         if (!member) {
             const userNotFoundEmbed = new MessageEmbed()
-                .setColor('#e94c4c')
-                .setTitle('<:denied:1242201411492778034> Kullanıcı Bulunamadı')
+                .setColor('#fd494a')
+                .setTitle('<:denied:1243275827974504528> Kullanıcı Bulunamadı')
                 .setDescription('Belirtilen kullanıcı bulunamadı.');
             return interaction.reply({ embeds: [userNotFoundEmbed], ephemeral: true });
         }
@@ -37,15 +37,15 @@ module.exports = {
         try {
             await member.kick({ reason });
             const successEmbed = new MessageEmbed()
-                .setColor('#00ff00')
-                .setTitle('<:sucses:1242201413556113499> Kullanıcı Atıldı')
+                .setColor('#30cb74')
+                .setTitle('<:sucses:1243275119414214756> Kullanıcı Atıldı')
                 .setDescription(`${user.tag} kullanıcısı başarıyla sunucudan atıldı.\nSebep: ${reason}`);
             return interaction.reply({ embeds: [successEmbed] });
         } catch (error) {
             console.error(error);
             const errorEmbed = new MessageEmbed()
-                .setColor('#e94c4c')
-                .setTitle('<:denied:1242201411492778034> Hata')
+                .setColor('#fd494a')
+                .setTitle('<:denied:1243275827974504528> Hata')
                 .setDescription('Kullanıcıyı sunucudan atarken bir hata oluştu.');
             return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
         }

@@ -23,8 +23,8 @@ module.exports = {
         const owners = ownerIds.map(id => `<@${id}>`).join(', ');
 
         const embed = new MessageEmbed()
-            .setColor('#e97b4c')
-            .setTitle('<:botinfo:1242206378706079935> Bot Bilgileri')
+            .setColor('#49fd71')
+            .setTitle('<:botinfo:1243277093731569704> Bot Bilgileri')
             .setDescription('Bu botun detaylı bilgileri.')
             .addFields(
                 { name: 'Bot İsmi', value: client.user.username, inline: true },
