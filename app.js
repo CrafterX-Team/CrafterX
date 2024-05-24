@@ -29,12 +29,29 @@ const commands = client.commands.map(cmd => cmd.data.toJSON());
 
 client.once('ready', async () => {
     console.log(`Bot ${client.user.tag} olarak giriş yaptı!`);
+    setInterval(changePresence, 10000);
+// Durumu değiştiren fonksiyon
 
-    // Botun durumunu ayarlayın
+function changePresence() {
+
+    const serverCount = client.guilds.cache.size;
+    // Durumları burada tanımlayabilirsiniz. Örneğin:
+    const statuses = [
+        { name: 'CrafterX', type: 'PLAYING' },
+        { name: `${serverCount} sunucuda`, type: 'PLAYING' },
+    ];
+
+    // Rastgele bir durum seçin
+    const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+
+    // Durumu ayarlayın
     client.user.setPresence({
-        activities: [{ name: 'CrafterX', type: 'PLAYING' }],
-        status: 'dnd',
+        activities: [randomStatus],
+        status: 'dnd', // Botun çevrimdışı gibi görünmesini istiyorsanız 'dnd' olarak ayarlayabilirsiniz
     });
+
+   
+}
 
     const rest = new REST({ version: '9' }).setToken(config.token);
 
