@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@discordjs/rest": "^2.3.0",
+    "axios": "^1.7.2",
     "discord.js": "^13.5.1",
     "ms": "^2.1.3"
   }

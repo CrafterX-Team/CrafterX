@@ -1,60 +1,89 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { MessageActionRow, MessageSelectMenu, MessageEmbed } = require('discord.js');
 
 module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('help')
-    .setDescription('Tüm komutları gösterir.')
-    .addStringOption(option =>
-      option.setName('kategori')
-        .setDescription('Komut kategorisini seçin.')
-        .setRequired(false)
-        .addChoices([
-          ["Kullanıcı Komutları", "kullanıcı"],
-          ["Kayıt Komutları", "kayıt"],
-          ["Cezalandırma Komutları", "ceza"],
-          ["Stat Komutları", "stat"],
-          ["Yetkili Komutları", "yetkili"],
-          ["Kurucu Komutları", "kurucu"],
-          ["Sahip Komutları", "sahip"],
-          ["Vandetta Komutları", "vandetta"]
-        ])
-    ),
-  async execute(interaction) {
-    const category = interaction.options.getString("kategori");
+    data: new SlashCommandBuilder()
+        .setName('help')
+        .setDescription('Yardım komutlarını gösterir'),
+    async execute(interaction) {
+        const client = interaction.client; // Client nesnesini al
 
-    // Kullanıcının yetkisini kontrol et
-    if (!interaction.member.permissions.has("ADMINISTRATOR") && !["bot-commands"].includes(interaction.channel.name)) {
-      return await interaction.reply({ content: "Bu komutu kullanmak için gerekli izinlere sahip değilsiniz veya bu kanalda kullanamazsınız.", ephemeral: true });
-    }
+        const helpEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setTitle('Yardım Menüsü')
+            .setDescription('Aşağıdaki menüden yardım almak istediğiniz konuyu seçin')
+            .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
 
-    if (!category) {
-      // Eğer kategori belirtilmemişse genel yardımı göster
-      const embed = new MessageEmbed()
-        .setColor("#0099ff")
-        .setTitle("Yardım Menüsü")
-        .setDescription("Bir kategori seçmek için aşağıdaki seçeneklerden birini kullanın.")
-        .addField("Kullanıcı Komutları", "Kullanıcı komutları hakkında yardım almak için `/yardım kullanıcı`.")
-        .addField("Kayıt Komutları", "Kayıt komutları hakkında yardım almak için `/yardım kayıt`.")
-        // Diğer kategorileri buraya ekle...
-        .setFooter("Kategori seçerek daha detaylı bilgi alabilirsiniz.");
+        const helpMenu = new MessageActionRow()
+            .addComponents(
+                new MessageSelectMenu()
+                    .setCustomId('help_select')
+                    .setPlaceholder('Bir seçenek belirleyin')
+                    .addOptions([
+                        {
+                            label: 'Moderasyon',
+                            description: 'Moderasyon sistemi hakkında bilgi',
+                            value: 'command_1',
+                            emoji: '<:mod:1243845695723667508>',
+                        },
+                        {
+                            label: 'Nsfw',
+                            description: 'Nsfw sistemi hakkında bilgi',
+                            value: 'command_2',
+                            emoji: '<:18:1243845125076160543>',
+                        },
+                        {
+                            label: 'Fun',
+                            description: 'Fun sistemi hakkında bilgi',
+                            value: 'command_3',
+                            emoji: '<:fun:1243846210645917716>',
+                        },
+                    ]),
+            );
 
-      return await interaction.reply({ embeds: [embed] });
-    }
+        await interaction.reply({ embeds: [helpEmbed], components: [helpMenu] });
 
-    // Kategoriye göre komutları filtrele
-    const commands = interaction.client.commands.filter(command => command.data.options[0].choices.some(choice => choice.value === category));
+        const filter = i => i.customId === 'help_select' && i.user.id === interaction.user.id;
+        const collector = interaction.channel.createMessageComponentCollector({ filter, time: 60000 });
 
-    if (commands.size === 0) {
-      return await interaction.reply({ content: "Belirtilen kategoride komut bulunamadı.", ephemeral: true });
-    }
+        collector.on('collect', async i => {
+            let selectedEmbed;
 
-    // Komutları listele
-    const embed = new MessageEmbed()
-      .setColor("#0099ff")
-      .setTitle(`${category.charAt(0).toUpperCase() + category.slice(1)} Komutları`)
-      .setDescription(commands.map(command => `\`${command.data.name}\`: ${command.data.description}`).join("\n"));
+            if (i.values[0] === 'command_1') {
+                selectedEmbed = new MessageEmbed()
+                    .setColor('#4966fd')
+                    .setTitle('Moderasyon Komutları')
+                    .setDescription('</ban:1242480313217712151>\nSeçtiğiniz kullanıcıyı banlar\n</kick:1242485399910355055>\nSeçtiğiniz kullanıcıyı banlar\n</kanal-aç:1243577583249915927>\nSeçtiğiniz kanalın kilidini açar\n</kanal-kilit:1243577583249915925>\nSeçtiğiniz kanalı kilitler\n</yavaş-mod:1242972776151912475>\nSeçtiğiniz kanala yavaş mod ekler\n</sil:1242972776151912471>\nBelirttiğiniz sayı kadar mesaj siler\n</rol-ver:1242972776151912474>\nSeçtiğiniz kullanıcıya rol verir\n</rol-al:1243577583249915928>\nSeçtiğiniz kullanıcıdan rol alır')
+                    .setFooter('Moderasyon © CrafterX')
+                    .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
+            } else if (i.values[0] === 'command_2') {
+                selectedEmbed = new MessageEmbed()
+                    .setColor('#fd494a')
+                    .setTitle('Nsfw Komutları')
+                    .setDescription('</ass:1243847215005437965>\nRastgele bir ass(göt) resmi gönderir\n</pussy:1243847215005437967>\nRastgele bir pussy resmi gönderir.\n</hentai:1243847215005437966>\nRastgele bir hentai resmi gönderir.\n</yaoi:1243847916238667818>\nRastgele bir yaoi resmi gönderir.')
+                    .setFooter('Nsfw © CrafterX')
+                    .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
+            } else if (i.values[0] === 'command_3') {
+                selectedEmbed = new MessageEmbed()
+                    .setColor('#fd49d5')
+                    .setTitle('Fun Komutları')
+                    .setDescription('</kahve:1242972776151912473>\nBir fincan kahve içersiniz.')
+                    .setFooter('Fun © CrafterX')
+                    .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
+            }
 
-    await interaction.reply({ embeds: [embed] });
-  }
+            await i.update({ embeds: [selectedEmbed], components: [helpMenu] });
+
+            // 30 saniye sonra menüyü kaldır
+            setTimeout(async () => {
+                await interaction.editReply({ components: [] });
+            }, 30000);
+        });
+
+        collector.on('end', collected => {
+            if (collected.size === 0) {
+                interaction.editReply({ content: 'Zaman aşımına uğradı. Lütfen tekrar deneyin.', components: [] });
+            }
+        });
+    },
 };
