@@ -4,11 +4,11 @@ const fs = require('fs');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('kadınrol')
-        .setDescription('Kadın rolünü ayarlar.')
+        .setName('kayıtsızrol')
+        .setDescription('Kayıtsız rolünü ayarlar.')
         .addRoleOption(option =>
             option.setName('rol')
-                .setDescription('Kadın rolü')
+                .setDescription('Kayıtsız rolü')
                 .setRequired(true)),
     async execute(interaction) {
         const { guild } = interaction;
@@ -19,17 +19,17 @@ module.exports = {
             return interaction.reply({ content: '# <:denied:1243275827974504528> **Hata**\nBu komutu kullanmaya yetkiniz yok!', ephemeral: true });
         }
 
-        // Kadın rolünü ayarlama
-        const kadınRol = interaction.options.getRole('rol');
+        // Kayıtsız rolünü ayarlama
+        const kayıtsızRol = interaction.options.getRole('rol');
 
         // Ayarları kaydetme
-        saveSettings(guild.id, { kadınRolId: kadınRol.id });
+        saveSettings(guild.id, { kayıtsızRolId: kayıtsızRol.id });
 
         // Geri dönüş mesajı gönderme
         const embed = new MessageEmbed()
             .setColor('#30cb74')
-            .setTitle('<:sucses:1243275119414214756> Kadın Rolü Ayarlandı')
-            .setDescription(`Kadın rolü başarıyla <@&${kadınRol.id}> olarak ayarlandı!`);
+            .setTitle('<:sucses:1243275119414214756> Kayıtsız Rolü Ayarlandı')
+            .setDescription(`Kayıtsız rolü başarıyla <@&${kayıtsızRol.id}> olarak ayarlandı!`);
         interaction.reply({ embeds: [embed], ephemeral: false });
     },
 };

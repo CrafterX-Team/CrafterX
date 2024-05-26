@@ -4,32 +4,37 @@ const fs = require('fs');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('kadınrol')
-        .setDescription('Kadın rolünü ayarlar.')
-        .addRoleOption(option =>
-            option.setName('rol')
-                .setDescription('Kadın rolü')
+        .setName('hgkanalayarla')
+        .setDescription('Hoş geldin kanalını ayarlar.')
+        .addChannelOption(option =>
+            option.setName('kanal')
+                .setDescription('Hoş geldin kanalı')
                 .setRequired(true)),
     async execute(interaction) {
         const { guild } = interaction;
         const member = guild.members.cache.get(interaction.user.id);
 
-        // Yetkili rolü kontrolü
-        if (!member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
+        // MANAGE_GUILD izni kontrolü
+        if (!member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
             return interaction.reply({ content: '# <:denied:1243275827974504528> **Hata**\nBu komutu kullanmaya yetkiniz yok!', ephemeral: true });
         }
 
-        // Kadın rolünü ayarlama
-        const kadınRol = interaction.options.getRole('rol');
+        // Hoş geldin kanalını ayarlama
+        const hoşGeldinKanal = interaction.options.getChannel('kanal');
+
+        // Kanalın metin kanalı olup olmadığını kontrol etme
+        if (hoşGeldinKanal.type !== 'GUILD_TEXT') {
+            return interaction.reply({ content: '# <:denied:1243275827974504528> **Hata**\nLütfen bir metin kanalı seçin!', ephemeral: true });
+        }
 
         // Ayarları kaydetme
-        saveSettings(guild.id, { kadınRolId: kadınRol.id });
+        saveSettings(guild.id, { hoşGeldinKanalId: hoşGeldinKanal.id });
 
         // Geri dönüş mesajı gönderme
         const embed = new MessageEmbed()
             .setColor('#30cb74')
-            .setTitle('<:sucses:1243275119414214756> Kadın Rolü Ayarlandı')
-            .setDescription(`Kadın rolü başarıyla <@&${kadınRol.id}> olarak ayarlandı!`);
+            .setTitle('<:sucses:1243275119414214756> Hoş Geldin Kanalı Ayarlandı')
+            .setDescription(`Hoş geldin kanalı başarıyla <#${hoşGeldinKanal.id}> olarak ayarlandı!`);
         interaction.reply({ embeds: [embed], ephemeral: false });
     },
 };

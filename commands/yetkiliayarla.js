@@ -4,32 +4,32 @@ const fs = require('fs');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('kadınrol')
-        .setDescription('Kadın rolünü ayarlar.')
+        .setName('yetkiliayarla')
+        .setDescription('Yetkili rolünü ayarlar.')
         .addRoleOption(option =>
             option.setName('rol')
-                .setDescription('Kadın rolü')
+                .setDescription('Yetkili rolü')
                 .setRequired(true)),
     async execute(interaction) {
         const { guild } = interaction;
         const member = guild.members.cache.get(interaction.user.id);
 
-        // Yetkili rolü kontrolü
-        if (!member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
+        // MANAGE_GUILD izni kontrolü
+        if (!member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
             return interaction.reply({ content: '# <:denied:1243275827974504528> **Hata**\nBu komutu kullanmaya yetkiniz yok!', ephemeral: true });
         }
 
-        // Kadın rolünü ayarlama
-        const kadınRol = interaction.options.getRole('rol');
+        // Yetkili rolünü ayarlama
+        const yetkiliRol = interaction.options.getRole('rol');
 
         // Ayarları kaydetme
-        saveSettings(guild.id, { kadınRolId: kadınRol.id });
+        saveSettings(guild.id, { yetkiliRolId: yetkiliRol.id });
 
         // Geri dönüş mesajı gönderme
         const embed = new MessageEmbed()
             .setColor('#30cb74')
-            .setTitle('<:sucses:1243275119414214756> Kadın Rolü Ayarlandı')
-            .setDescription(`Kadın rolü başarıyla <@&${kadınRol.id}> olarak ayarlandı!`);
+            .setTitle('<:sucses:1243275119414214756> Yetkili Rolü Ayarlandı')
+            .setDescription(`Yetkili rolü başarıyla <@&${yetkiliRol.id}> olarak ayarlandı!`);
         interaction.reply({ embeds: [embed], ephemeral: false });
     },
 };

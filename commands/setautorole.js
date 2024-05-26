@@ -1,14 +1,14 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions, MessageEmbed } = require('discord.js');
-const fs = require('fs');
+const fs = require('fs'); // fs modülünü ekliyoruz
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('kadınrol')
-        .setDescription('Kadın rolünü ayarlar.')
+        .setName('setautorole')
+        .setDescription('Otorol rolünü ayarlar.')
         .addRoleOption(option =>
             option.setName('rol')
-                .setDescription('Kadın rolü')
+                .setDescription('Otorol rolü')
                 .setRequired(true)),
     async execute(interaction) {
         const { guild } = interaction;
@@ -19,17 +19,17 @@ module.exports = {
             return interaction.reply({ content: '# <:denied:1243275827974504528> **Hata**\nBu komutu kullanmaya yetkiniz yok!', ephemeral: true });
         }
 
-        // Kadın rolünü ayarlama
-        const kadınRol = interaction.options.getRole('rol');
+        // Otorol rolünü ayarlama
+        const otorol = interaction.options.getRole('rol');
 
         // Ayarları kaydetme
-        saveSettings(guild.id, { kadınRolId: kadınRol.id });
+        saveSettings(guild.id, { otorolId: otorol.id });
 
         // Geri dönüş mesajı gönderme
         const embed = new MessageEmbed()
             .setColor('#30cb74')
-            .setTitle('<:sucses:1243275119414214756> Kadın Rolü Ayarlandı')
-            .setDescription(`Kadın rolü başarıyla <@&${kadınRol.id}> olarak ayarlandı!`);
+            .setTitle('<:sucses:1243275119414214756> Otorol Ayarlandı')
+            .setDescription(`Otorol başarıyla <@&${otorol.id}> olarak ayarlandı!`);
         interaction.reply({ embeds: [embed], ephemeral: false });
     },
 };
