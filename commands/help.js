@@ -38,6 +38,12 @@ module.exports = {
                             value: 'command_3',
                             emoji: '<:fun:1243846210645917716>',
                         },
+                        {
+                            label: 'Kayıt',
+                            description: 'Kayıt sistemi hakkında bilgi',
+                            value: 'command_4',
+                            emoji: '<:kayit:1244264190965841960>',
+                        },
                     ]),
             );
 
@@ -71,6 +77,14 @@ module.exports = {
                     .setFooter('Fun © CrafterX')
                     .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
             }
+         else if (i.values[0] === 'command_4') {
+            selectedEmbed = new MessageEmbed()
+                .setColor('#30cbb8')
+                .setTitle('Kayıt Komutları')
+                .setDescription('</kayıt:1244107367486849084>\nBelirttiğiniz kullanıcıyı kayıt edersiniz.\n</kayıtsız:1244110117780062350>\nBelirttiğiniz kullanıcıya kayıtsız rol verirsiniz.\n</yetkiliayarla:1243910456410767383>\nSeçtiğiniz rolü kayıt edicek yetkililer için ayarlarsınız.\n</erkekrol:1243604864622133390>\nBelirttiğiniz erkek rolü yapar.\n</kadınrol:1243632885886488609>\nBelirttiğiniz kadın rolü yapar.')
+                .setFooter('Kayıt © CrafterX')
+                .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
+        }
 
             await i.update({ embeds: [selectedEmbed], components: [helpMenu] });
 
