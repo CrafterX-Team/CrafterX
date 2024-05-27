@@ -34,7 +34,7 @@ module.exports = {
                     .setStyle('DANGER'),
             );
 
-        const messageContent = 'Etkinlik Rolü Seç\nLütfen en fazla 2 adet etkinlik rolünü seçin ya da mevcut etkinlik rollerinizi temizleyin.';
+        const messageContent = '<:nokta:1244669395796492389> Etkinlik Rolü Seç\nLütfen en fazla 2 adet etkinlik rolünü seçin ya da mevcut etkinlik rollerinizi temizleyin.';
 
         await interaction.reply({ content: messageContent, components: [selectMenu, button] });
 
