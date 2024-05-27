@@ -190,4 +190,5 @@ function convertNumberToEmoji(number) {
 client.login(config.token);
 
 
-// MY DEVALOPER ECO - VANDETTA 
+
+
