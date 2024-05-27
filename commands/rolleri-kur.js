@@ -37,7 +37,7 @@ module.exports = {
                 { name: 'Red Dead Redemption 2', color: '#8B0000' },
                 { name: 'Cyberpunk 2077', color: '#20B2AA' },
                 { name: '▬▬▬▬▬▬▬▬', color: '#050000' },
-                { name: 'Ateş Kırmızısı', color: '#FF0000' },
+                { name: 'Kırmızı', color: '#FF0000' },
                 { name: 'Mor', color: '#800080' },
                 { name: 'Sarı', color: '#FFFF00' },
                 { name: 'Yeşil', color: '#008000' },
