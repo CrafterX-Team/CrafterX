@@ -56,27 +56,29 @@ module.exports = {
             // Eksik rolleri tutacak bir dizi oluştur
             const missingRoles = [];
 
-            // Her rol için kontrol et ve eksik olanları ve sunucuda zaten olanları bul
+            // Her rol için kontrol et ve eksik olanları bul
             for (const { name, color } of roller) {
-                if (existingRoles.includes(name)) {
-                    // Eğer rol zaten varsa, eksik roller listesine ekle
-                    missingRoles.push(name);
-                } else {
-                    // Eğer rol yoksa, eksik rolleri oluştur
-                    await guild.roles.create({
-                        name: name,
-                        color: color,
-                        reason: `${name} rolü oluşturuldu.`
-                    });
+                if (!existingRoles.includes(name)) {
+                    // Eğer rol yoksa, eksik roller listesine ekle
+                    missingRoles.push({ name, color });
                 }
             }
 
-            // Eğer eksik rol varsa, eksik rolleri oluştur ve mesaj olarak göster
+            // Eksik rolleri oluştur
+            for (const { name, color } of missingRoles) {
+                await guild.roles.create({
+                    name: name,
+                    color: color,
+                    reason: `${name} rolü eksik olduğu için yeniden oluşturuldu.`
+                });
+            }
+
             if (missingRoles.length > 0) {
+                // Eğer eksik rol varsa, eksik rolleri oluştur ve mesaj olarak göster
                 const embed = new MessageEmbed()
-                    .setColor('#ff0000')
-                    .setTitle('Hata: Roller Zaten Var')
-                    .setDescription(`Aşağıdaki roller zaten sunucuda mevcut olduğu için tekrar oluşturulamaz: ${missingRoles.join(', ')}`)
+                    .setColor('#30cb74')
+                    .setTitle('Özel Roller Kuruldu')
+                    .setDescription(`Eksik roller başarıyla oluşturuldu: ${missingRoles.map(role => role.name).join(', ')}`)
                     .setTimestamp();
 
                 await interaction.editReply({ embeds: [embed], ephemeral: true });
