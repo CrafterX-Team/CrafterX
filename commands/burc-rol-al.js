@@ -41,7 +41,7 @@ module.exports = {
                     .setStyle('DANGER'),
             );
 
-        const messageContent = 'Burç Rolü Seç\nLütfen burç rolünü seçin ya da mevcut burç rolünüzü temizleyin.';
+        const messageContent = '<:nokta:1244669395796492389> Burç Rolü Seç\nLütfen burç rolünü seçin ya da mevcut burç rolünüzü temizleyin.';
 
         await interaction.reply({ content: messageContent, components: [selectMenu, button] });
 

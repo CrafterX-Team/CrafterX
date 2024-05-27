@@ -44,10 +44,14 @@ module.exports = {
                 { name: 'Mavi', color: '#0000FF' },
                 { name: 'Beyaz', color: '#FFFFFF' },
                 { name: 'Siyah', color: '#000000' },
+                { name: '▬▬▬▬▬▬▬▬', color: '#050000' },
                 { name: 'Evli', color: '#FFD700' },
                 { name: 'İlişkisi Yok', color: '#FF4500' },
                 { name: 'Açık İlişkide', color: '#9400D3' },
                 { name: 'Karışık', color: '#000000' },
+                { name: '▬▬▬▬▬▬▬▬', color: '#050000' },
+                { name: 'Çekiliş Katılımcısı', color: '#800080' }, // Çekiliş katılımcısı rolü eklendi
+                { name: 'Etkinlik Katılımcısı', color: '#FF4500' } // Etkinlik katılımcısı rolü eklendi
             ];
 
             // Mevcut rolleri al
