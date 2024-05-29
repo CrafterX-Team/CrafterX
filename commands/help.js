@@ -43,6 +43,16 @@ module.exports = {
                             description: 'Kayıt sistemi hakkında bilgi',
                             value: 'command_4',
                             emoji: '<:kayit:1244264190965841960>',
+
+                            
+                        },
+                        {
+                            label: 'Menü',
+                            description: 'Menü sistemi hakkında bilgi',
+                            value: 'command_5',
+                            emoji: '<a:geiciemoji:1244235944261849088>',
+
+                            
                         },
                     ]),
             );
@@ -81,8 +91,17 @@ module.exports = {
             selectedEmbed = new MessageEmbed()
                 .setColor('#30cbb8')
                 .setTitle('Kayıt Komutları')
-                .setDescription('</kayıt:1244107367486849084>\nBelirttiğiniz kullanıcıyı kayıt edersiniz.\n</kayıtsız:1244110117780062350>\nBelirttiğiniz kullanıcıya kayıtsız rol verirsiniz.\n</yetkiliayarla:1243910456410767383>\nSeçtiğiniz rolü kayıt edicek yetkililer için ayarlarsınız.\n</erkekrol:1243604864622133390>\nBelirttiğiniz erkek rolü yapar.\n</kadınrol:1243632885886488609>\nBelirttiğiniz kadın rolü yapar.')
+                .setDescription('</kayıt:1244356066607763461>\nBelirttiğiniz kullanıcıyı kayıt edersiniz.\n</kayıtsız:1244356066607763458>\nBelirttiğiniz kullanıcıya kayıtsız rol verirsiniz.\n</yetkiliayarla:1244356066712616982>\nSeçtiğiniz rolü kayıt edicek yetkililer için ayarlarsınız.\n</erkekrol:1243604864622133390>\nBelirttiğiniz erkek rolü yapar.\n</kadınrol:1243632885886488609>\nBelirttiğiniz kadın rolü yapar.')
                 .setFooter('Kayıt © CrafterX')
+                .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
+        }
+
+        else if (i.values[0] === 'command_5') {
+            selectedEmbed = new MessageEmbed()
+                .setColor('#30cbb8')
+                .setTitle('Menü Komutları')
+                .setDescription('</rolleri-kur:1245171951941455902>\nSeçtiğiniz rolü kayıt edicek yetkililer için ayarlarsınız.\n</burc-rol-al:1245171951761227928>\nBurç Menü Sistemi.\n</etkinlik-rol-al:1245171951761227929>\nEtkinlik Menü Sistemi.\n</iliski-rol-al:1245171951761227931>\nİlişki Durumu Menü Sistemi.\n</oyun-rol-al:1245171951761227935>\nOyun Seçim Menü Sisemi.\n</renk-rol-al:1245171951761227937>\nRenk Seçim Menüsüa')
+                .setFooter('Menü © CrafterX')
                 .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
         }
 
