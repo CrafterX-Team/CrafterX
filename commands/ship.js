@@ -53,7 +53,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setTitle('💖 Ship Testi 💖')
             .setDescription(`${user1.username} ve ${user2.username} arasındaki uyum: ${compatibility}%`)
-            .setColor('RANDOM')
+            .setColor('#FF0000')
             .setImage('attachment://ship-image.png')
             .setTimestamp();
 

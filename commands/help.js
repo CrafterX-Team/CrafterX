@@ -83,7 +83,7 @@ module.exports = {
                 selectedEmbed = new MessageEmbed()
                     .setColor('#fd49d5')
                     .setTitle('Fun Komutları')
-                    .setDescription('</kahve:1242972776151912473>\nBir fincan kahve içersiniz.')
+                    .setDescription('</kahve:1242972776151912473>\nBir fincan kahve içersiniz.\n</ship:1245180808696696945>\nBelirttiğiniz 2 kişiyi shipler\n')
                     .setFooter('Fun © CrafterX')
                     .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
             }
