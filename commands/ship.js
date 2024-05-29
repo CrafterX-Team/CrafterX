@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageAttachment } = require('discord.js');
+const { MessageEmbed, MessageAttachment, MessageActionRow, MessageButton } = require('discord.js');
 const Canvas = require('canvas');
 
 module.exports = {
@@ -57,6 +57,31 @@ module.exports = {
             .setImage('attachment://ship-image.png')
             .setTimestamp();
 
-        await interaction.reply({ embeds: [embed], files: [attachment] });
+        // Buton oluşturma
+        const row = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                    .setCustomId('delete')
+                    .setLabel('Sil')
+                    .setStyle('DANGER'),
+            );
+
+        const message = await interaction.reply({ embeds: [embed], files: [attachment], components: [row], fetchReply: true });
+
+        // Butona tıklanma olayı
+        const filter = i => i.customId === 'delete' && i.user.id === interaction.user.id;
+        const collector = message.createMessageComponentCollector({ filter, time: 15000 });
+
+        collector.on('collect', async i => {
+            if (i.customId === 'delete') {
+                await i.update({ content: 'Mesaj silindi.', embeds: [], components: [], attachments: [] });
+            }
+        });
+
+        collector.on('end', collected => {
+            if (collected.size === 0) {
+                interaction.editReply({ components: [] });
+            }
+        });
     },
 };
