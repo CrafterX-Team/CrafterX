@@ -11,7 +11,7 @@ module.exports = {
         const helpEmbed = new MessageEmbed()
             .setColor('#ffffff')
             .setTitle('Yardım Menüsü')
-            .setDescription('Aşağıdaki menüden yardım almak istediğiniz konuyu seçin')
+            .setDescription('Aşağıdaki menüden yardım almak istediğiniz konuyu seçin\n \n<:duyuru:1245385921113882644>**Beta**\nCrafterX bir süre beta aşamasında kalıcaktır yani bazı komutlar kaldırılabilir yada onun yerine başka bir slash komutu ile değiştirilebilir!')
             .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
 
         const helpMenu = new MessageActionRow()
