@@ -142,8 +142,6 @@ client.on('guildMemberRemove', member => {
 });
 //! Gelen giden system (Bitiş)
 
-
-
 // Sunucu ayarlarını kaydetme ve yükleme fonksiyonları
 function getSettings(guildId) {
     const settingsFile = './Data/server.json';
@@ -186,9 +184,4 @@ function convertNumberToEmoji(number) {
     return numberString.split('').map(digit => numberEmojis[digit]).join('');
 }
 
-
 client.login(config.token);
-
-
-
-

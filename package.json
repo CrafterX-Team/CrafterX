@@ -3,6 +3,7 @@
     "@discordjs/rest": "^2.3.0",
     "@discordjs/voice": "^0.17.0",
     "axios": "^1.7.2",
+    "canvas": "^2.11.2",
     "chess": "^1.2.1",
     "discord.js": "^13.17.1",
     "ms": "^2.1.3",
