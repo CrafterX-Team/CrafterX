@@ -100,7 +100,7 @@ module.exports = {
             selectedEmbed = new MessageEmbed()
                 .setColor('#30afcb')
                 .setTitle('Menü Komutları')
-                .setDescription('</rolleri-kur:1245171951941455902>\nMenü Sistemi İçin Gerekli Olan Rolleri Kurar.\n</burc-rol-al:1245171951761227928>\nBurç Menü Sistemi.\n</etkinlik-rol-al:1245171951761227929>\nEtkinlik Menü Sistemi.\n</iliski-rol-al:1245171951761227931>\nİlişki Durumu Menü Sistemi.\n</oyun-rol-al:1245171951761227935>\nOyun Seçim Menü Sisemi.\n</renk-rol-al:1245171951761227937>\nRenk Seçim Menüsüa')
+                .setDescription('</rolleri-kur:1245171951941455902>\nMenü Sistemi İçin Gerekli Olan Rolleri Kurar.\n</burc-rol-al:1245171951761227928>\nBurç Menü Sistemi.\n</etkinlik-rol-al:1245171951761227929>\nEtkinlik Menü Sistemi.\n</iliski-rol-al:1245171951761227931>\nİlişki Durumu Menü Sistemi.\n</oyun-rol-al:1245171951761227935>\nOyun Seçim Menü Sisemi.\n</renk-rol-al:1245171951761227937>\nRenk Seçim Menüsü')
                 .setFooter('Menü © CrafterX')
                 .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
         }
