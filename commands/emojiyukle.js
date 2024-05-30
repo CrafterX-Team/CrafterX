@@ -13,6 +13,11 @@ module.exports = {
                 .setDescription('Yüklenecek emoji adı')
                 .setRequired(true)),
     async execute(interaction) {
+        // Komutu kullanan kullanıcının bir sunucu yöneticisi olup olmadığını kontrol et
+        if (!interaction.member.permissions.has('ADMINISTRATOR')) {
+            return await interaction.reply('Bu komutu kullanabilmek için sunucu yöneticisi olmalısınız.');
+        }
+
         const url = interaction.options.getString('url');
         const name = interaction.options.getString('isim');
 
@@ -25,5 +30,3 @@ module.exports = {
         }
     },
 };
-
-//

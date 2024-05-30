@@ -6,6 +6,11 @@ module.exports = {
         .setName('rolleri-kur')
         .setDescription('Sunucuya özel rolleri kurar.'),
     async execute(interaction) {
+        // Kullanıcı sunucu yöneticisi mi kontrol edelim
+        if (!interaction.member.permissions.has('ADMINISTRATOR')) {
+            return interaction.reply({ content: 'Bu komutu kullanabilmek için sunucu yöneticisi olmalısınız.', ephemeral: true });
+        }
+
         await interaction.deferReply({ ephemeral: true });
 
         const { guild } = interaction;
@@ -53,6 +58,7 @@ module.exports = {
                 { name: 'Çekiliş Katılımcısı', color: '#800080' }, // Çekiliş katılımcısı rolü eklendi
                 { name: 'Etkinlik Katılımcısı', color: '#FF4500' } // Etkinlik katılımcısı rolü eklendi
             ];
+
 
             // Mevcut rolleri al
             const existingRoles = guild.roles.cache.map(role => role.name);
@@ -103,6 +109,3 @@ module.exports = {
         }
     },
 };
-
-
-// MENÜ SİSTEMİ İÇİN ROL KURMA SİSTEMİ

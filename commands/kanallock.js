@@ -7,6 +7,11 @@ module.exports = {
     .setDescription('Belirtilen kanalı kilitleyerek mesaj gönderimini engeller.')
     .addChannelOption(option => option.setName('kanal').setDescription('Kilitlemek istediğiniz kanalı belirtin').setRequired(true)),
   async execute(interaction) {
+    // Komutu kullanan kullanıcının bir sunucu yöneticisi olup olmadığını kontrol et
+    if (!interaction.member.permissions.has('ADMINISTRATOR')) {
+      return await interaction.reply('Bu komutu kullanabilmek için sunucu yöneticisi olmalısınız.');
+    }
+
     const channel = interaction.options.getChannel('kanal');
 
     if (!channel) {

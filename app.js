@@ -104,6 +104,45 @@ client.on('guildMemberAdd', async member => {
     }
 });
 
+// Küfür engelleme
+client.on('messageCreate', async message => {
+    if (message.author.bot) return;
+
+    const guardFilePath = path.join(__dirname, 'Data/guard.json');
+    let guardData = {};
+
+    if (fs.existsSync(guardFilePath)) {
+        guardData = JSON.parse(fs.readFileSync(guardFilePath, 'utf8'));
+    }
+
+    const guildSettings = guardData[message.guild.id];
+    if (!guildSettings || !guildSettings.swearFilter) return;
+
+    const swearWords = [
+        'amk', 'aq', 'oç', 'orospu', 'piç', 'sikerim', 'sik', 'siktir', 'yarrak', 'ananı', 'ananız', 'ananızın', 'ananıza', 
+        'pezevenk', 'şerefsiz', 'göt', 'ibne', 'puşt', 'kahpe', 'fahişe', 'salak', 'mal', 'aptal', 'gerizekalı', 'dangalak',
+        'deli', 'hayvan', 'öküz', 'eşek', 'kaltak', 'kerhane', 'karı', 'beyinsiz', 'aptal', 'geri zekalı', 'damar', 'domuz',
+        'serefsiz', 'pezevenk', 'pislik', 'soysuz', 'puşt', 'orospu çocukları', 'kancık', 'yavşak', 'puşt', 'kaşar', 'dalyarak',
+        'kaşar', 'meme', 'gavat', 'oturak', 'taşak', 'orospu çocuğu', 'yarak'
+    ];
+
+    const messageContent = message.content.toLowerCase();
+
+    for (const swearWord of swearWords) {
+        if (messageContent.includes(swearWord)) {
+            await message.delete();
+
+            const warningMessage = await message.channel.send(`${message.author}, bu sunucuda küfür etmek yasaktır!`);
+            
+            // 5 saniye sonra uyarı mesajını sil
+            setTimeout(() => warningMessage.delete(), 5000);
+
+            break;
+        }
+    }
+});
+
+
 //! Gelen giden system (Başlangıç)
 client.on('guildMemberAdd', member => {
     const serverData = JSON.parse(fs.readFileSync('./Data/server.json', 'utf-8'));
@@ -185,5 +224,3 @@ function convertNumberToEmoji(number) {
 }
 
 client.login(config.token);
-
-//
