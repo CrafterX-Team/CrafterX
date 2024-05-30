@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const fs = require('fs');
 const path = require('path');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,9 +16,13 @@ module.exports = {
                     { name: 'Kapat', value: 'false' }
                 )),
     async execute(interaction) {
-        // Kullanıcı bir sunucu yöneticisi mi kontrol edelim
         if (!interaction.member.permissions.has('ADMINISTRATOR')) {
-            return interaction.reply('Bu komutu kullanabilmek için sunucu yöneticisi olmalısınız.');
+            const embed = new MessageEmbed()
+                .setColor('#fd494a')
+                .setTitle('<:denied:1243275827974504528> Yetki Hatası')
+                .setDescription('Bu komutu kullanabilmek için sunucu yöneticisi olmalısınız.');
+
+            return interaction.reply({ embeds: [embed] });
         }
 
         const durum = interaction.options.getString('durum') === 'true';
@@ -36,6 +41,11 @@ module.exports = {
 
         fs.writeFileSync(guardFilePath, JSON.stringify(guardData, null, 4));
 
-        await interaction.reply(`Küfür engelleme sistemi başarıyla ${durum ? 'açıldı' : 'kapandı'}.`);
+        const embed = new MessageEmbed()
+            .setColor('#30cb74')
+            .setTitle('<:sucses:1243275119414214756> Küfür Engel Durumu Ayarlandı')
+            .setDescription(`Küfür engelleme sistemi başarıyla ${durum ? 'açıldı' : 'kapandı'}.`);
+
+        await interaction.reply({ embeds: [embed] });
     },
 };

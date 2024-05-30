@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,7 +16,11 @@ module.exports = {
     async execute(interaction) {
         // Komutu kullanan kullanıcının bir sunucu yöneticisi olup olmadığını kontrol et
         if (!interaction.member.permissions.has('ADMINISTRATOR')) {
-            return await interaction.reply('Bu komutu kullanabilmek için sunucu yöneticisi olmalısınız.');
+            const embed = new MessageEmbed()
+                .setColor('#fd494a')
+                .setTitle('<:denied:1243275827974504528> Yetki Hatası')
+                .setDescription('Bu komutu kullanabilmek için sunucu yöneticisi olmalısınız.');
+            return await interaction.reply({ embeds: [embed] });
         }
 
         const url = interaction.options.getString('url');
@@ -23,10 +28,18 @@ module.exports = {
 
         try {
             const emoji = await interaction.guild.emojis.create(url, name);
-            await interaction.reply(`Emoji başarıyla yüklendi: ${emoji.toString()}`);
+            const embed = new MessageEmbed()
+                .setColor('#30cb74')
+                .setTitle('<:sucses:1243275119414214756> Başarılı!')
+                .setDescription(`Emoji başarıyla yüklendi: ${emoji.toString()}`);
+            await interaction.reply({ embeds: [embed] });
         } catch (error) {
             console.error(error);
-            await interaction.reply('Emoji yüklenirken bir hata oluştu.');
+            const embed = new MessageEmbed()
+                .setColor('#fd494a')
+                .setTitle('<:denied:1243275827974504528> Hata!')
+                .setDescription('Emoji yüklenirken bir hata oluştu.');
+            await interaction.reply({ embeds: [embed] });
         }
     },
 };
