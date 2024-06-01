@@ -27,6 +27,12 @@ module.exports = {
                             emoji: '<:mod:1243845695723667508>',
                         },
                         {
+                            label: 'Ayarlanabilir',
+                            description: 'Ayarlanabilir sistem hakkında bilgi',
+                            value: 'command_6',
+                            emoji: '<:settings:1246449811058724884>',
+                        },
+                        {
                             label: 'Nsfw',
                             description: 'Nsfw sistemi hakkında bilgi',
                             value: 'command_2',
@@ -101,6 +107,14 @@ module.exports = {
                 .setColor('#30afcb')
                 .setTitle('Menü Komutları')
                 .setDescription('</rolleri-kur:1245171951941455902>\nMenü Sistemi İçin Gerekli Olan Rolleri Kurar.\n</burc-rol-al:1245171951761227928>\nBurç Menü Sistemi.\n</etkinlik-rol-al:1245171951761227929>\nEtkinlik Menü Sistemi.\n</iliski-rol-al:1245171951761227931>\nİlişki Durumu Menü Sistemi.\n</oyun-rol-al:1245171951761227935>\nOyun Seçim Menü Sisemi.\n</renk-rol-al:1245171951761227937>\nRenk Seçim Menüsü')
+                .setFooter('Menü © CrafterX')
+                .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
+        }
+        else if (i.values[0] === 'command_6') {
+            selectedEmbed = new MessageEmbed()
+                .setColor('#cb8d30')
+                .setTitle('Ayarlanabilir Komutlar')
+                .setDescription('</gelen-giden:1242972776151912472>\nGiriş Çıkış Sistemini ayarlarsınız\n</setautorole:1245171951941455904>\nYeni gelen kişiye verilcek rolü ayarlarsınız.\n</setmute:1246451908705521777>\nMute rolünü ayarlarsınız.')
                 .setFooter('Menü © CrafterX')
                 .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
         }
