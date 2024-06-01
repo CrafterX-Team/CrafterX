@@ -75,7 +75,7 @@ module.exports = {
                 selectedEmbed = new MessageEmbed()
                     .setColor('#4966fd')
                     .setTitle('Moderasyon Komutları')
-                    .setDescription('</ban:1242480313217712151>\nSeçtiğiniz kullanıcıyı banlar\n</kick:1242485399910355055>\nSeçtiğiniz kullanıcıyı banlar\n</kanal-aç:1243577583249915927>\nSeçtiğiniz kanalın kilidini açar\n</kanal-kilit:1243577583249915925>\nSeçtiğiniz kanalı kilitler\n</yavaş-mod:1242972776151912475>\nSeçtiğiniz kanala yavaş mod ekler\n</sil:1242972776151912471>\nBelirttiğiniz sayı kadar mesaj siler\n</rol-ver:1242972776151912474>\nSeçtiğiniz kullanıcıya rol verir\n</rol-al:1243577583249915928>\nSeçtiğiniz kullanıcıdan rol alır')
+                    .setDescription('</ban:1242480313217712151>\nSeçtiğiniz kullanıcıyı banlar\n</kick:1242485399910355055>\nSeçtiğiniz kullanıcıyı banlar\n</kanal-aç:1243577583249915927>\nSeçtiğiniz kanalın kilidini açar\n</kanal-kilit:1243577583249915925>\nSeçtiğiniz kanalı kilitler\n</yavaş-mod:1242972776151912475>\nSeçtiğiniz kanala yavaş mod ekler\n</sil:1242972776151912471>\nBelirttiğiniz sayı kadar mesaj siler\n</rol-ver:1242972776151912474>\nSeçtiğiniz kullanıcıya rol verir\n</rol-al:1243577583249915928>\nSeçtiğiniz kullanıcıdan rol alır\n</mute:1246455851259265024>\nBelirttiğiniz kullanıcıya ')
                     .setFooter('Moderasyon © CrafterX')
                     .setThumbnail(client.user.displayAvatarURL()); // Botun avatarını thumbnail olarak ekle
             } else if (i.values[0] === 'command_2') {
