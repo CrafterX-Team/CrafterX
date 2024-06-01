@@ -15,15 +15,35 @@ const client = new Client({
 
 client.commands = new Collection();
 
-// Komutları komutlar klasöründen yükleyin
 const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+const commandFolders = fs.readdirSync(commandsPath);
 
-for (const file of commandFiles) {
+// Tüm alt klasörlerdeki komutları yükle
+for (const folder of commandFolders) {
+    const folderPath = path.join(commandsPath, folder);
+    if (fs.statSync(folderPath).isDirectory()) {  // Klasör olup olmadığını kontrol et
+        const commandFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
+
+        for (const file of commandFiles) {
+            const filePath = path.join(folderPath, file);
+            const command = require(filePath);
+            
+            if ('data' in command && 'execute' in command) {
+                client.commands.set(command.data.name, command);
+            } else {
+                console.log(`[UYARI] ${filePath} dosyası doğru bir komut modülü içermiyor.`);
+            }
+        }
+    }
+}
+
+// commands klasörünün kökündeki komutları yükle
+const rootCommandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+for (const file of rootCommandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
     
-    // Komutun doğru yapıda olup olmadığını kontrol edin
     if ('data' in command && 'execute' in command) {
         client.commands.set(command.data.name, command);
     } else {
@@ -37,7 +57,6 @@ client.once('ready', async () => {
     console.log(`Bot ${client.user.tag} olarak giriş yaptı!`);
     setInterval(changePresence, 10000);
 
-    // Durumu değiştiren fonksiyon
     function changePresence() {
         const serverCount = client.guilds.cache.size;
         const statuses = [
