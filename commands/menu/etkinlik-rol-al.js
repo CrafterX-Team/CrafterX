@@ -36,11 +36,11 @@ module.exports = {
 
         const messageContent = '<:nokta:1244669395796492389> Etkinlik Rolü Seç\nLütfen en fazla 2 adet etkinlik rolünü seçin ya da mevcut etkinlik rollerinizi temizleyin.';
 
-        await interaction.reply({ content: messageContent, components: [selectMenu, button] });
+        const message = await interaction.reply({ content: messageContent, components: [selectMenu, button], fetchReply: true });
 
-        const filter = i => (i.customId === 'select-etkinlik' || i.customId === 'clear-etkinlik') && i.user.id === interaction.user.id;
+        const filter = i => i.customId === 'select-etkinlik' || i.customId === 'clear-etkinlik';
 
-        const collector = interaction.channel.createMessageComponentCollector({ filter, time: 60000 });
+        const collector = message.createMessageComponentCollector({ filter, time: 60000 });
 
         collector.on('collect', async i => {
             if (i.customId === 'select-etkinlik') {
@@ -84,4 +84,4 @@ module.exports = {
     },
 };
 
-// ETKİNKİK MENÜ SİSTEMİ
+//
