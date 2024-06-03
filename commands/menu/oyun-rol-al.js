@@ -29,7 +29,7 @@ module.exports = {
                         value: oyun.name,
                         description: oyun.description
                     })))
-                    .setMaxValues(2)
+                    .setMaxValues(10)
             );
 
         const button = new MessageActionRow()
@@ -42,11 +42,11 @@ module.exports = {
 
         const messageContent = '<:nokta:1244669395796492389> Oyun Rolleri Seç\nLütfen oyun rollerini seçin ya da mevcut oyun rollerinizi temizleyin.';
 
-        await interaction.reply({ content: messageContent, components: [selectMenu, button], ephemeral: true });
+        const message = await interaction.reply({ content: messageContent, components: [selectMenu, button], fetchReply: true });
 
-        const filter = i => (i.customId === 'select-oyun' || i.customId === 'clear-oyun') && i.user.id === interaction.user.id;
+        const filter = i => (i.customId === 'select-oyun' || i.customId === 'clear-oyun');
 
-        const collector = interaction.channel.createMessageComponentCollector({ filter, time: 60000 });
+        const collector = message.createMessageComponentCollector({ filter, time: 60000 });
 
         collector.on('collect', async i => {
             if (i.customId === 'select-oyun') {
@@ -84,8 +84,18 @@ module.exports = {
 
         collector.on('end', collected => {
             console.log(`Toplam ${collected.size} interaksiyon toplandı.`);
+            disableComponents(message);
         });
+
+        function disableComponents(message) {
+            const components = message.components.map(component => {
+                component.components.forEach(c => c.setDisabled(true));
+                return component;
+            });
+            message.edit({ components });
+        }
     },
 };
 
-// OYUN ROL ALMA
+
+//
