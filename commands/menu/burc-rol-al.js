@@ -43,11 +43,11 @@ module.exports = {
 
         const messageContent = '<:nokta:1244669395796492389> Burç Rolü Seç\nLütfen burç rolünü seçin ya da mevcut burç rolünüzü temizleyin.';
 
-        await interaction.reply({ content: messageContent, components: [selectMenu, button] });
+        const message = await interaction.reply({ content: messageContent, components: [selectMenu, button], fetchReply: true });
 
-        const filter = i => (i.customId === 'select-burc' || i.customId === 'clear-burc') && i.user.id === interaction.user.id;
+        const filter = i => i.customId === 'select-burc' || i.customId === 'clear-burc';
 
-        const collector = interaction.channel.createMessageComponentCollector({ filter, time: 60000 });
+        const collector = message.createMessageComponentCollector({ filter, time: 60000 });
 
         collector.on('collect', async i => {
             if (i.customId === 'select-burc') {
@@ -89,6 +89,4 @@ module.exports = {
     },
 };
 
-
-
-// BURÇ MENÜ ROL
+//
