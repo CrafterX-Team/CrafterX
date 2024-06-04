@@ -1,9 +1,10 @@
+const { Client, Collection, Intents, MessageEmbed, ActionRowBuilder, SelectMenuBuilder, Permissions } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { Client, Collection, Intents, MessageEmbed } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const config = require('./config.json');
+
 const client = new Client({ 
     intents: [
         Intents.FLAGS.GUILDS, 
@@ -14,14 +15,43 @@ const client = new Client({
 
 client.commands = new Collection();
 
-// Tüm komutları yükle
 const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+const commandFolders = fs.readdirSync(commandsPath);
 
-for (const file of commandFiles) {
-    const command = require(path.join(commandsPath, file));
-    client.commands.set(command.data.name, command);
+// Tüm alt klasörlerdeki komutları yükle
+for (const folder of commandFolders) {
+    const folderPath = path.join(commandsPath, folder);
+    if (fs.statSync(folderPath).isDirectory()) {  // Klasör olup olmadığını kontrol et
+        const commandFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
+
+        for (const file of commandFiles) {
+            const filePath = path.join(folderPath, file);
+            const command = require(filePath);
+            
+            if ('data' in command && 'execute' in command) {
+                client.commands.set(command.data.name, command);
+            } else {
+                console.log(`[UYARI] ${filePath} dosyası doğru bir komut modülü içermiyor.`);
+            }
+        }
+    }
 }
+
+// commands klasörünün kökündeki komutları yükle
+const rootCommandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+for (const file of rootCommandFiles) {
+    const filePath = path.join(commandsPath, file);
+    const command = require(filePath);
+    
+    if ('data' in command && 'execute' in command) {
+        client.commands.set(command.data.name, command);
+    } else {
+        console.log(`[UYARI] ${filePath} dosyası doğru bir komut modülü içermiyor.`);
+    }
+}
+
+const commands = client.commands.map(cmd => cmd.data.toJSON());
 
 client.once('ready', async () => {
     console.log(`Bot ${client.user.tag} olarak giriş yaptı!`);
@@ -45,7 +75,7 @@ client.once('ready', async () => {
         console.log('Başlatılıyor: (/) komutları kaydediliyor.');
         await rest.put(
             Routes.applicationCommands(client.user.id),
-            { body: client.commands.map(command => command.data.toJSON()) },
+            { body: commands },
         );
         console.log('Başarıyla (/) komutları kaydedildi.');
     } catch (error) {
@@ -61,7 +91,7 @@ client.on('interactionCreate', async interaction => {
     if (!command) return;
 
     try {
-        await command.execute(interaction);
+        await command.execute(interaction, client);
     } catch (error) {
         console.error(error);
         await interaction.reply({ content: 'Komut çalıştırılırken bir hata oluştu!', ephemeral: true });
